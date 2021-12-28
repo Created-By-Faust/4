@@ -23,16 +23,16 @@ private:
 
 public:
 
-    Iterator() : curr(nullptr){}
+    Iterator() : curr(nullptr){} /// default constructor
 
-    Iterator(T * ptr) : curr(ptr) {}
+    Iterator(T * ptr) : curr(ptr) {}///копирующий конструктор
 
-    Iterator(const Iterator & it) : curr(it.curr) {}
+    Iterator(const Iterator & it) : curr(it.curr) {}/// перемещающий конструктор
 
     /*!
     @brief оператор сравнения
-    @param it != (const Iterator & it) const
-    @returns operator !=
+    @param it элемент
+    @return Да/Нет
     */
     bool operator != (const Iterator & it) const {
         return curr != it.curr;
@@ -40,25 +40,23 @@ public:
 
     /*!
      @brief оператор сравнения
-     @param it == (const Iterator & it) const
-     @returns operator ==
+     @param it элемент
+     @return Да/Нет
     */
     bool operator == (const Iterator & it) const {
         return curr == it.curr;
     }
     /*!
-     @fn operator * const
      @brief оператор разыменовывания
-     @returns operator *
+     @return текущий элеменнт
      */
     T & operator * () {
         return *curr;
     }
     
     /*!
-     @fn operator ++ const
      @brief постфиксный префиксный инкреммент
-     @returns operator ++
+     @return указатель  на элемент
 
      */
     Iterator & operator ++ () {
@@ -66,9 +64,8 @@ public:
         return *this;
     }
     /*!
-     @fn *operator ++ (int) const
      @brief  постфиксный постфиксный инкреммент
-     @returns operator ++ (int)
+     @return  указатель  на элемент
      */
     Iterator *operator ++ (int) {
         ++(*this);
@@ -97,31 +94,31 @@ private:
     T *vector;
 
 public:
-    Vector() : size(1)
+    Vector() : size(1) ///констуктруктор по умолчанию
     {
         vector = new T[1];
     }
 
-    Vector(const Vector & other) : size(other.size), curr(other.curr), vector(new T[other.size])
+    Vector(const Vector & other) : size(other.size), curr(other.curr), vector(new T[other.size]) ///копирующий конструктор
     {
         for (int i = 0; i < curr; i++)
             vector[i] = other.vector[i];
     }
 
-    Vector(Vector && other) noexcept : size(other.size), curr(other.curr), vector(other.vector)
+    Vector(Vector && other) noexcept : size(other.size), curr(other.curr), vector(other.vector)///перемещающий конструктор
     {
         other.vector = nullptr;
     }
 
-    ~Vector()
+    ~Vector() ///дейструктор
     {
         delete[] vector;
     }
     
     /*!
-    @fn operator = (const Vector & other)
     @brief копирующий оператор присваивания
-    @returns operator =
+     @param вектор другой
+    @return указатель  на элемент
     */
     
     Vector & operator = (const Vector & other)
@@ -140,8 +137,11 @@ public:
     
     
     /*!
-     @brief метод добавление нового элемента
-    */
+    
+    
+    @brief метод добавление нового элемента
+     @param вектор другой
+     */
     void push_back(T item) {
         if (curr == size) {
             T * old = vector;
@@ -158,12 +158,12 @@ public:
     
 
     //typedef class MyVectorIt<T> Iterator;
-    
+    ///указатель на начало вектора
     const Iterator<T> begin()
     {
         return Iterator(this->vector);
     }
-
+    ///указатель на конец вектора 
     const Iterator<T> end()
     {
         return Iterator(this->vector + curr);
